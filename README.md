@@ -1,53 +1,74 @@
 ---
 page_type: sample
-languages:
-- csharp
-products:
-- dotnet
-description: "Add 150 character max description"
-urlFragment: "update-this-to-unique-url-stub"
+languages: Java
+products: GitHub
+description: "Deploy Spring Petclinic application using GitHub Actions"
+urlFragment: "https://github.com/agoncal/agoncal-application-petstore-ee7"
 ---
 
-# Official Microsoft Sample
+# Deploying a Java Web App using GitHub actions
 
-<!-- 
-Guidelines on README format: https://review.docs.microsoft.com/help/onboard/admin/samples/concepts/readme-template?branch=master
+Learn to deploy a Java Spring app to Azure App Service and set up a CI/CD workflow using GitHub Actions
 
-Guidance on onboarding samples to docs.microsoft.com/samples: https://review.docs.microsoft.com/help/onboard/admin/samples/process/onboarding?branch=master
+## Overview
 
-Taxonomies for products and languages: https://review.docs.microsoft.com/new-hope/information-architecture/metadata/taxonomies?branch=master
--->
+**GitHub Actions** gives you the flexibility to build an automated software development lifecycle workflow. You can write individual tasks ("Actions") and combine them to create a custom workflow. Workflows are configurable automated processes that you can set up in your repository to build, test, package, release, or deploy any project on GitHub.
 
-Give a short description for your sample here. What does it do and why is it important?
+With **GitHub Actions** you can build end-to-end continuous integration (CI) and continuous deployment (CD) capabilities directly in your repository. 
 
-## Contents
+### Prerequisites
 
-Outline the file contents of the repository. It helps users navigate the codebase, build configuration and any related assets.
+1. You will need a **GitHub** account. If you do not have one, you can sign up for free [here](https://github.com/join)
 
-| File/folder       | Description                                |
-|-------------------|--------------------------------------------|
-| `src`             | Sample source code.                        |
-| `.gitignore`      | Define what to ignore at commit time.      |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `README.md`       | This README file.                          |
-| `LICENSE`         | The license for the sample.                |
+1. **Microsoft Azure Account**: You will need a valid and active Azure account for this lab. If you do not have one, you can sign up for a [free trial](https://azure.microsoft.com/en-us/free/).
 
-## Prerequisites
 
-Outline the required components and tools that a user might need to have on their machine in order to run the sample. This can be anything from frameworks, SDKs, OS versions or IDE releases.
+### Setting up the GitHub repository
 
-## Setup
+Fork this repo and open the sample app code in VS Code to get started.
 
-Explain how to prepare the sample once the user clones or downloads the repository. The section should outline every step necessary to install dependencies and set up any settings (for example, API keys and output folders).
+## Create an Azure App Service
 
-## Running the sample
+Create a web app hosted in Azure with a unique name, **Linux** as the OS and **Java 8** as the runtime. 
 
-Outline step-by-step instructions to execute the sample and see its output. Include steps for executing the sample from the IDE, starting specific services in the Azure portal or anything related to the overall launch of the code.
+## Set up CI/CD workflow with GitHub Actions 
 
-## Key concepts
+We'll use GitHub actions to automate our deployment workflow for this web app. 
 
-Provide users with more context on the tools and services used in the sample. Explain some of the code that is being used and how services interact with each other.
+1. Navigate to the sample CI/CD workflow file `workflow.yml` in your GitHub repo under `.github/workflows/` folder path
+
+1. Modify the values of the environment variables based on your Azure app:
+```yaml
+env:
+  AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  JAVA_VERSION: '1.8'                # set this to the Java version to use
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}     # set GH repo secret with the publish profile of the web app
+```
+
+1. In the portal, Overview page, click on "Get publish profile". A publish profile is a kind of deployment credential, useful when you don't own the Azure subscription. Open the downloaded settings file in VS Code and copy the contents of the file.
+
+   ![](https://github.com/Azure/actions-workflow-samples/blob/master/assets/images/get-publish-profile.png)
+
+
+1. We will now add the publish profile as a secret associated with this repo. On the GitHub repository, click on the "Settings" tab.
+
+   ![](https://github.com/Azure/actions-workflow-samples/blob/master/assets/images/github-settings.png)
+
+
+1. Go to "Secrets". Create a new secret called "AZURE_WEBAPP_PUBLISH_PROFILE" and paste the contents from the settings file.
+
+   ![](https://github.com/Azure/actions-workflow-samples/blob/master/assets/images/create-secret.png)
+
+1. Once you're done editing the workflow by configuring the required environment variables, click on "Start commit". Committing the file will trigger the workflow.
+
+1. You can go back to the Actions tab, click on your workflow, and see that the workflow is queued or being deployed. Wait for the job to complete successfully.
+
+1. Browse your app by pasting the URL of your Azure web app: https://AZURE_WEBAPP_NAME.azurewebsites.net
+
+1. Make any changes by editing the app contents and commit the changes. Browse to the **Actions** tab in GitHub to view the live logs of your Action workflow which got triggered with the push of the commit.
+
+1.  Once the workflow successfully completes execution, browse back to your website to visualise the new changes you introduced!
 
 ## Contributing
 
