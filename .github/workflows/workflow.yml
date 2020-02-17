@@ -15,8 +15,42 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }} # set this to the path to your web app project
   JAVA_VERSION: '1.8'                # set this to the node version to use
   AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}     # set GH repo secret with the publish profile of the web app
-
+  # Below variables are needed only to provision a wildfly based web app ; Optional if you already have a wildfly based web app on Azure
+  CONTAINER_REGISTRY: ${{ secrets.REGISTRY_USERNAME }}.azurecr.io   # set this to Container Registry name 
+  AZURE_RESOURCE_GROUP: ActionsDemo   # set this to your Azure Resource group's name 
+  AZURE_APP_PLAN: ActionPlan  # set this to your App service plan's name 
+ 
+ 
 jobs:
+  provision-webapp:
+    runs-on: ubuntu-latest
+    steps:
+    # Provision a new Web App
+    - name: Azure authentication
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS  }}
+    - name: ACR authentication
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.CONTAINER_REGISTRY }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}    
+    - name: Docker Build & Push to ACR
+      run: |
+        docker build . -t ${{ env.CONTAINER_REGISTRY }}/wildfly
+        docker push ${{ env.CONTAINER_REGISTRY }}/wildfly
+    - name: Azure CLI script to create a new Web App for Container
+      uses: azure/CLI@v0-beta
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i ${{ env.CONTAINER_REGISTRY }}/wildfly
+  
+  build-and-deploy-to-dev:
+    needs: provision-webapp
+    runs-on: ubuntu-latest
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
