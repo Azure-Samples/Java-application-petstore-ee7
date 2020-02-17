@@ -22,38 +22,38 @@ env:
  
  
 jobs:
-  provision-webapp:
-    runs-on: ubuntu-latest
-    steps:
-    # Provision a new Web App with wildfly container
-    - name: Checkout
-      uses: actions/checkout@v2.0.0
-      with:
-        repository: azure-Samples/app-service-wildfly
-    - name: Azure authentication
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS  }}
-    - name: ACR authentication
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.CONTAINER_REGISTRY }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}    
-    - name: Docker Build & Push to ACR
-      run: |
-        docker build . -t ${{ env.CONTAINER_REGISTRY }}/wildfly
-        docker push ${{ env.CONTAINER_REGISTRY }}/wildfly
-    - name: Azure CLI script to create a new Web App for Container
-      uses: azure/CLI@v0-beta
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az account show
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i ${{ env.CONTAINER_REGISTRY }}/wildfly
+#   provision-webapp:
+#     runs-on: ubuntu-latest
+#     steps:
+#     # Provision a new Web App with wildfly container
+#     - name: Checkout
+#       uses: actions/checkout@v2.0.0
+#       with:
+#         repository: azure-Samples/app-service-wildfly
+#     - name: Azure authentication
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS  }}
+#     - name: ACR authentication
+#       uses: azure/docker-login@v1
+#       with:
+#         login-server: ${{ env.CONTAINER_REGISTRY }}
+#         username: ${{ secrets.REGISTRY_USERNAME }}
+#         password: ${{ secrets.REGISTRY_PASSWORD }}    
+#     - name: Docker Build & Push to ACR
+#       run: |
+#         docker build . -t ${{ env.CONTAINER_REGISTRY }}/wildfly
+#         docker push ${{ env.CONTAINER_REGISTRY }}/wildfly
+#     - name: Azure CLI script to create a new Web App for Container
+#       uses: azure/CLI@v0-beta
+#       with:
+#         azcliversion: latest
+#         inlineScript: |
+#           az account show
+#           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i ${{ env.CONTAINER_REGISTRY }}/wildfly
   
   build-and-deploy:
-    needs: provision-webapp
+#     needs: provision-webapp
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
