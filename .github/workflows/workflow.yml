@@ -25,8 +25,11 @@ jobs:
   provision-webapp:
     runs-on: ubuntu-latest
     steps:
-    # Provision a new Web App
-    - uses: actions/checkout@master
+    # Provision a new Web App with wildfly container
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+      with:
+        repository: azure-Samples/app-service-wildfly
     - name: Azure authentication
       uses: azure/login@v1
       with:
