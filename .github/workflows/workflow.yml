@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # Provision a new Web App
+    - uses: actions/checkout@master
     - name: Azure authentication
       uses: azure/login@v1
       with:
