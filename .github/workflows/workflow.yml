@@ -48,11 +48,8 @@ jobs:
           az account show
           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i ${{ env.CONTAINER_REGISTRY }}/wildfly
   
-  build-and-deploy-to-dev:
-    needs: provision-webapp
-    runs-on: ubuntu-latest
   build-and-deploy:
-    name: Build and Deploy
+    needs: provision-webapp
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
