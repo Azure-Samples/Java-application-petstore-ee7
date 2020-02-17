@@ -29,7 +29,7 @@ Fork this repo and open the sample app code in VS Code to get started.
 
 ## Create an Azure App Service
 
-Create a web app hosted in Azure with a unique name, **Linux** as the OS and **Java 8** as the runtime. 
+Create a Wildfly based web app hosted in Azure by following the guidance in this article: https://github.com/Azure-Samples/app-service-wildfly
 
 ## Set up CI/CD workflow with GitHub Actions 
 
