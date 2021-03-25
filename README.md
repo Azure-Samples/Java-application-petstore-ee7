@@ -73,6 +73,22 @@ env:
 
 1.  Once the workflow successfully completes execution, browse back to your website to visualise the new changes you introduced!
 
+# The Java EE Petstore Is Back
+
+> When you create something and give it away, you lose control of what you've created and then, anything can happen.
+> 
+> I created this Petstore application years ago to show how Java EE components would work all together. 
+> I used this application in many talks, workshops, demos... and then, time passed, I forgot about it and never updated it.
+> I've written this code when monoliths were a thing, when the cloud was just starting, and when the only CI/CD tool we had was called Hudson.
+> 
+> Today, thanks to the Azure team, my Petstore application is built with GitHub actions and deployed to the cloud.
+> Without changing the original code, and with only a few commands and some configuration, you can deploy the application to Azure.
+> What a journey!
+> 
+> Thank you,
+> 
+> [Antonio Goncalves](http://www.antoniogoncalves.org)
+
 # Application - Petstore Java EE 7
 
 * *Author* : [Antonio Goncalves](http://www.antoniogoncalves.org)
