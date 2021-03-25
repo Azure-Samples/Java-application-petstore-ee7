@@ -1,6 +1,6 @@
 ---
 page_type: sample
-description: "Deploy Java Spring Petclinic application using GitHub Actions"
+description: "Deploy Java EE PetStore application using GitHub Actions"
 products:
 - GitHub Actions
 - Azure App service
@@ -11,7 +11,7 @@ urlFragment: https://github.com/agoncal/agoncal-application-petstore-ee7
 
 # Deploying a Java Web App using GitHub actions
 
-Learn to deploy a Java Spring app to Azure App Service and set up a CI/CD workflow using GitHub Actions
+Learn to deploy a Java EE app to Azure App Service and set up a CI/CD workflow using GitHub Actions
 
 ## Overview
 
