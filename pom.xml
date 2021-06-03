@@ -19,7 +19,7 @@
     <version.arquillian.wildfly>2.0.2.Final</version.arquillian.wildfly>
     <version.shrinkwrap>1.2.6</version.shrinkwrap>
     <version.arquillian.rest>1.0.0.Alpha4</version.arquillian.rest>
-    <version.resteasy>3.1.4.Final</version.resteasy>
+    <version.resteasy>4.5.7.Final</version.resteasy>
     <version.derby>10.10.1.1</version.derby>
     <version.junit>4.12</version.junit>
     <version.equalsverifier>1.7.8</version.equalsverifier>
